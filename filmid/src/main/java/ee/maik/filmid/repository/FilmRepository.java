@@ -6,6 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface FilmRepository extends JpaRepository<Film, Long> {
-    // See liides on tühi, sest JpaRepository annab meile
-    // automaatselt save(), findAll(), deleteById() jne.
+
 }

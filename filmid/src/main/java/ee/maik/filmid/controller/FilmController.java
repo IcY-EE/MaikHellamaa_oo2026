@@ -5,7 +5,7 @@ import ee.maik.filmid.repository.FilmRepository;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
-// ... ülejäänud kood
+
 
 @RestController
 @RequestMapping("/api/filmid")
