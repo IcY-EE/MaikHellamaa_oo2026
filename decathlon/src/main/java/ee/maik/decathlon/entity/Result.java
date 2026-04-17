@@ -1,10 +1,7 @@
 package ee.maik.decathlon.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
@@ -15,11 +12,10 @@ public class Result {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private String event;
-    private double performance;
-    private int points;
+    private String discipline; // Spordiala (nt 100m)
+    private double value;      // Tulemus (nt 12.5)
+    private int points;        // Punktid (arvutatakse back-endis)
 
     @ManyToOne
-    private Athlete athlete;
+    private Athlete athlete;   // Seos sportlasega
 }
