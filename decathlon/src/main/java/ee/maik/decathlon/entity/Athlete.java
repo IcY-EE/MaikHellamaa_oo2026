@@ -2,7 +2,6 @@ package ee.maik.decathlon.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import java.util.List;
 
 @Getter
 @Setter
@@ -14,4 +13,6 @@ public class Athlete {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    private String country;
+    private int totalPoints = 0;
 }

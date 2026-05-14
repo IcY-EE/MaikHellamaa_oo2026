@@ -18,13 +18,26 @@ public class ResultController {
     @Autowired
     private AthleteRepository athleteRepository;
 
-    @GetMapping("total-points")
-    public int getTotalPoints(@RequestParam Long athleteId) {
-        return resultRepository.findByAthleteId(athleteId)
-                .stream()
-                .mapToInt(Result::getPoints)
-                .sum();
-    }
+    @PostMapping("add-result")
+    public ResponseEntity<?> addResult(@RequestParam Long athleteId, @RequestBody Result result) {
+        Athlete athlete = athleteRepository.findById(athleteId).orElse(null);
+        if (athlete == null) return ResponseEntity.badRequest().body("Viga: Sportlast ei leitud!");
 
-    // Siia võid hiljem lisada ka add-result meetodi
+        int points = 0;
+        if ("100m".equals(result.getDiscipline())) {
+            points = (int) (25.4347 * Math.pow(18 - result.getValue(), 1.81));
+        } else if ("kaugushüpe".equals(result.getDiscipline())) {
+            points = (int) (0.14354 * Math.pow(result.getValue() * 100 - 220, 1.4));
+        }
+
+        result.setPoints(points);
+        result.setAthlete(athlete);
+        resultRepository.save(result);
+
+        int newTotal = resultRepository.findByAthleteId(athleteId).stream().mapToInt(Result::getPoints).sum();
+        athlete.setTotalPoints(newTotal);
+        athleteRepository.save(athlete);
+
+        return ResponseEntity.ok(result);
+    }
 }
